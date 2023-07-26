@@ -57,6 +57,8 @@ def send_data_to_postgres(local_data: pd.DataFrame, connection_args: dict):
     connection_str = f'postgresql://{user}:{password}@{host}:{port}/{database}'
     engine = create_engine(connection_str)
 
+    local_data.rename(columns = {'dataHora':'datahora'}, inplace = True)
+
     table_name = 'brt_raw'
     local_data.to_sql(table_name, engine, if_exists='append', index=False)
 
