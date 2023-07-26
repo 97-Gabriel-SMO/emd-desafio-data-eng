@@ -1,0 +1,11 @@
+brt_watch:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: 5400
+      user: myuser
+      pass: mypassword
+      dbname: mydatabase
+      schema: public

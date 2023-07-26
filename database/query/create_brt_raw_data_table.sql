@@ -1,14 +1,15 @@
 CREATE TABLE IF NOT EXISTS brt_raw (
-    codigo SERIAL PRIMARY KEY,
+    id  SERIAL PRIMARY KEY,
+    codigo VARCHAR,
     placa VARCHAR,
     linha VARCHAR,
     latitude FLOAT,
     longitude FLOAT,
-    dataHora TIMESTAMP,
+    dataHora BIGINT,
     velocidade FLOAT,
     id_migracao_trajeto VARCHAR,
     sentido VARCHAR,
     trajeto VARCHAR,
     hodometro FLOAT,
-    direcao BOOLEAN
+    direcao VARCHAR
 );
