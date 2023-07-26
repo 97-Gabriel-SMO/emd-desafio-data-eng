@@ -6,7 +6,7 @@ import json
 import os
 
 local_storage_schedule = IntervalSchedule(interval=timedelta(minutes=1))
-postgres_storage_schedule = IntervalSchedule(interval=timedelta(minutes=2))
+postgres_storage_schedule = IntervalSchedule(interval=timedelta(minutes=13))
 
 current_dir = os.getcwd()
 
