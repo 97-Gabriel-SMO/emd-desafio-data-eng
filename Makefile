@@ -19,3 +19,15 @@ deploy_flows:
 
 run_dbt:
 	cd dbt/brt_watch && dbt run
+
+
+start:
+	make start_db
+	make start_server
+	make create_project
+	make deploy_flows
+	make start_agent
+
+stop:
+	docker-compose down
+	prefect server stop
