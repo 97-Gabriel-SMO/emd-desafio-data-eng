@@ -1,11 +1,11 @@
-import os
+import json
 import psycopg2
+import os
 
-user = 'myuser'
-password = 'mypassword'
-host = 'localhost'
-database = 'mydatabase'
-port = '5400'  # Porta padrão do PostgreSQL
+current_dir = os.getcwd()
+config_dir = os.path.dirname(current_dir)
+with open(config_dir+"/config.json", 'r') as arquivo:
+    connection_args = json.load(arquivo)
 
 
 def read_query_from_file(file_path):
@@ -19,7 +19,11 @@ def create_table(query):
     try:
         # Conecta ao banco de dados
         connection = psycopg2.connect(
-            host=host, port=port, database=database, user=user, password=password
+            host=connection_args["POSTGRES_HOST"],
+            port=connection_args["POSTGRES_PORT"],
+            database=connection_args["POSTGRES_DB"],
+            user=connection_args["POSTGRES_USER"],
+            password=connection_args["POSTGRES_PASSWORD"]
         )
         
         # Cria um cursor para executar comandos SQL
@@ -44,5 +48,5 @@ def create_table(query):
             connection.close()
 
 # Chama a função para criar a tabela
-query = read_query_from_file("query/create_brt_raw_data_table.sql")
+query = read_query_from_file(current_dir+"/query/create_brt_raw_data_table.sql")
 create_table(query)

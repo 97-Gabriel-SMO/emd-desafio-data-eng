@@ -2,19 +2,17 @@ from prefect import Flow,task
 from prefect.schedules import IntervalSchedule
 from tasks import make_api_request,storage_data,read_local_data,send_data_to_postgres
 from datetime import timedelta
-
+import json
+import os
 
 local_storage_schedule = IntervalSchedule(interval=timedelta(minutes=1))
 postgres_storage_schedule = IntervalSchedule(interval=timedelta(minutes=2))
 
-connection_args = {
-    "POSTGRES_DB": "mydatabase",
-    "POSTGRES_USER": "myuser",
-    "POSTGRES_PASSWORD": "mypassword",
-    "POSTGRES_PORT": 5400,
-    "POSTGRES_HOST": "localhost"
-}
+current_dir = os.getcwd()
 
+with open(current_dir+"/config.json", 'r') as arquivo:
+    connection_args = json.load(arquivo)
+   
 
 with Flow("local_storage_flow",schedule=local_storage_schedule) as local_storage_flow:
     api_data = make_api_request("https://dados.mobilidade.rio/gps/brt")
