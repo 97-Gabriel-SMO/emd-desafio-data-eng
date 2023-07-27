@@ -41,3 +41,72 @@ A pipeline deverá ser construída subindo uma instância local do Prefect (em P
 
 Fale conosco pelo e-mail que foi utilizado para o envio desse desafio.
 
+# Solução
+
+Para resolução deste desafio, foram desenvolvidos 3 processos que ocorrem de forma paralela, a partir do diagrama abaixo pode-se observar o fluxo dos dados.
+
+![Dataflow](images/DataFlow.png)
+
+## Processos
+
+### Local Storage Flow
+
+Processo responsavel pelo armazenamento local dos dados, sua execução consistem em realizar buscar os dados a partir de uma requisição a API e armazena-los de forma costante em um arquivo .csv. O processo possui a frequencia de execução de 1min.
+
+### Postgres Storage Flow
+
+Processo responsavel pelo armazenamento dos dados no banco de dados local Postgres. Sua execução consiste em extrair os dados locais (armazenados no .csv), realizar o tratamento e a inserção dos mesmos em uma tabela (brt_raw) no banco local. O processo possui a frequencia de execução de 13min.
+
+
+### DBT Model
+
+Processo responsavel pela criação da view contendo a localização e velocidade mais recente de cada objeto armazenado no banco. O modelo consiste na execução de uma query onde-se realiza a consulta e o armazenamento dos dados na view.
+
+## Dependências do Codigo
+
+O código foi desenvolvido considerando as seguintes especificações do sistema.
+
+- Ubuntu 22.04
+- Python 3.10.6
+- Pip 22.0.2
+- Docker 20.10.22
+
+
+**Atenção:** É fortemente recomendada a utilização de uma virtualenv para a execução deste código, é possivel realizar esse processo a partir de:
+
+`python3 -m venv .venv`
+
+## Execução do Codigo
+
+**Atenção:** Todos as etapas abaixo devem ser executadas a partir do diretório raiz (emd-desafio-data-eng):
+
+Para a instalação das bibliotecas necessarias, pode-se utilizar: 
+
+`pip install -r requirements.txt`
+
+
+A execução do codigo é feita em duas etapas e executada atraves de um arquivo Makefile: 
+
+### Prefect Flows
+
+Para a execução dos processos de armazenamento, digite o comando:
+
+`make start`
+
+Os processos serão inciados conforme a frequencia definida. Caso queira parar o processo, execute:
+
+`make stop`
+
+#### **Observações**
+
+- A execução do codigo foi desenvolvida de maneira que os dois processos são executados através do mesmo agent, porém também é possivel realizar a execução dos mesmos de forma paralela em agents diferentes. Para isso, é preciso realizar a criação de outro agent e realizar (através do label) a distribuição das execuções.
+
+- O comandos de execução foram definidos a partir de outros subcomandos do Makefile, caso exista o interesse de executar os comandos separadamente, é recomendado que leia o código Makefile. 
+
+### DBT Model
+
+A execução deste processo ocorre através do comando.
+
+`run_dbt`
+
+Seu resultado esta alocado na View: `generate_view` localizada no banco postgres local
