@@ -41,3 +41,9 @@ A pipeline deverá ser construída subindo uma instância local do Prefect (em P
 
 Fale conosco pelo e-mail que foi utilizado para o envio desse desafio.
 
+# Solução
+
+Para resolução deste desafio, foi arquitetado e seguinte fluxo de dados.
+
+![Dataflow](images/DataFlow.png)
+
