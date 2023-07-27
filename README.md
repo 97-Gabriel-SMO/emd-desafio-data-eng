@@ -62,7 +62,7 @@ Processo responsavel pelo armazenamento dos dados no banco de dados local Postgr
 
 Processo responsavel pela criação da view contendo a localização e velocidade mais recente de cada objeto armazenado no banco. O modelo consiste na execução de uma query onde-se realiza a consulta e o armazenamento dos dados na view.
 
-## Execução do Código
+## Dependências do Codigo
 
 O código foi desenvolvido considerando as seguintes especificações do sistema.
 
@@ -76,9 +76,14 @@ O código foi desenvolvido considerando as seguintes especificações do sistema
 
 `python3 -m venv .venv`
 
+## Execução do Codigo
+
+**Atenção:** Todos as etapas abaixo devem ser executadas a partir do diretório raiz (emd-desafio-data-eng):
+
 Para a instalação das bibliotecas necessarias, pode-se utilizar: 
 
 `pip install -r requirements.txt`
+
 
 A execução do codigo é feita em duas etapas e executada atraves de um arquivo Makefile: 
 
