@@ -1,0 +1,5 @@
+prefect==0.15.9
+pandas==2.0.3
+dbt-postgres==1.5.3
+sqlalchemy==2.0.19
+psycopg==2.9.6
